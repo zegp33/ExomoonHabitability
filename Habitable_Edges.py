@@ -122,29 +122,27 @@ file_out6=open("All_contibution_Fglob_e.dat",'w')
 
 
 #***4)Calculos Habitable Edges
-"""
-#1)Calculo de HE de acuerdo a la excentricidad
-file_out7 = open("HE_IO_e.dat", 'w')
-E_pm = arange(0.001, 0.1,0.001)	#Rango de Excentricidades
-#E_pm = array([0.001, 0.01,0.1]) #Para 3 excentrcidades dadas
-for e_pm in E_pm:
-	#print e_pm
-	beta = sqrt(1.-e_pm**2)
-	f1 = 1. +(31./2.*e_pm**2.) + (255./8.*e_pm**4) + (185./16.*e_pm**6.) + (25./64.*e_pm**8.)
-	f2 = 1. + (15./2.*e_pm**2.) +  (45./8.*e_pm**4.) +   (5./16.*e_pm**6.)
-	f5 = 1. +  (3.*e_pm**2.)+  (3./8.*e_pm**4.)
-	a_pm = A_pm * R_p
-	Z_m = 3.*(G*G)*k_2m*(M_p*M_p)*(M_p+M_m)*((R_m**5.)/(a_pm**9.))*tau_m
-	h_m = (Z_m/(beta**15.)*(f1-(f2*f2))/(f5))/(4.*pi*(R_m*R_m))
-	F_glob = ((L_s+L_s2)/2.)*(1.-alpha_m_OPT)/(16.*pi*a_sp**2.*sqrt(1.-e_sp**2))*(1.+pi*R_p**2.*alpha_p/(2.*a_pm**2.))+R_p**2.*sigma_SB*T_p**4./a_pm**2.*(1.-alpha_m_IR)/4.+h_m 
+def HEexcentricidad():
+    #1)Calculo de HE de acuerdo a la excentricidad
+    file_out7 = open("HE_IO_e.dat", 'w')
+    E_pm = arange(0.001, 0.1,0.001)	#Rango de Excentricidades
+    #E_pm = array([0.001, 0.01,0.1]) #Para 3 excentrcidades dadas
+    for e_pm in E_pm:
+            #print e_pm
+            beta = sqrt(1.-e_pm**2)
+            f1 = 1. +(31./2.*e_pm**2.) + (255./8.*e_pm**4) + (185./16.*e_pm**6.) + (25./64.*e_pm**8.)
+            f2 = 1. + (15./2.*e_pm**2.) +  (45./8.*e_pm**4.) +   (5./16.*e_pm**6.)
+            f5 = 1. +  (3.*e_pm**2.)+  (3./8.*e_pm**4.)
+            a_pm = A_pm * R_p
+            Z_m = 3.*(G*G)*k_2m*(M_p*M_p)*(M_p+M_m)*((R_m**5.)/(a_pm**9.))*tau_m
+            h_m = (Z_m/(beta**15.)*(f1-(f2*f2))/(f5))/(4.*pi*(R_m*R_m))
+            F_glob = ((L_s+L_s2)/2.)*(1.-alpha_m_OPT)/(16.*pi*a_sp**2.*sqrt(1.-e_sp**2))*(1.+pi*R_p**2.*alpha_p/(2.*a_pm**2.))+R_p**2.*sigma_SB*T_p**4./a_pm**2.*(1.-alpha_m_IR)/4.+h_m
 
-	# DA BRAIN
-	a_HE = a_pm[where(F_glob < F_crit)[0][0]]
-	a_Io = a_pm[where(h_m < 2)[0][0]]
-	file_out7.write("%.5e	%.5e	%.3e \n" % (a_HE/R_p,a_Io/R_p,e_pm))
-	file_out7.write("\n")
-file_out7.close()
-"""
+            # DA BRAIN a_HE = a_pm[where(F_glob < F_crit)[0][0]] a_Io
+            = a_pm[where(h_m < 2)[0][0]] file_out7.write("%.5e %.5e
+            %.3e \n" % (a_HE/R_p,a_Io/R_p,e_pm)) file_out7.write("\n")
+            file_out7.close ()
+
 """
 #2)HE Variando la masa del planeta y el radio.
 MP=arange(200.0,1000.0,50.)*M_ear
